@@ -1,0 +1,11 @@
+<form class="jumbotron col-6" *ngIf="card">
+  <div class="form-group">
+    <label for="english">English</label>
+    <input class="form-control" [(ngModel)]="card.englishWord" name="english">
+  </div>
+  <div class="form-group">
+      <label for="russian">Russian</label>
+    <input class="form-control" [(ngModel)]="card.russianWord" name="russian">
+  </div>
+  <button class="btn btn-primary" (click)="updateWord()">Изменить</button>
+</form>
