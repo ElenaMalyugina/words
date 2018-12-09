@@ -1,4 +1,4 @@
-export interface CardModel{
+export class CardModel{
     id: string;
     englishWord: string;
     russianWord: string;

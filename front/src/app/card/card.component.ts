@@ -12,7 +12,7 @@ import { strictEqual } from 'assert';
 })
 export class CardComponent implements OnInit {
 
-  card: CardModel;
+  card: CardModel = new CardModel();
   cardsLength: number;
   
   constructor(private cardService: CardService, private actvatedRoute: ActivatedRoute){}
