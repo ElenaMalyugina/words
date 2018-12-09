@@ -12,10 +12,13 @@ import { strictEqual } from 'assert';
 })
 export class CardComponent implements OnInit {
 
-  card: CardModel = new CardModel();
+  card: CardModel = new CardModel('', '');
   cardsLength: number;
+  disabledInput: boolean = true;
+  isUpdate: boolean = false;
+  isNewWord: boolean = false;
   
-  constructor(private cardService: CardService, private actvatedRoute: ActivatedRoute){}
+  constructor(private cardService: CardService, private actvatedRoute: ActivatedRoute, private router: Router){}
 
   get prevLink(){
     let prevInd=parseInt(this.getId())-1;
@@ -46,34 +49,70 @@ export class CardComponent implements OnInit {
 
   public getWord(){
     let i=this.getId();
-    this.cardService.getCardData(i)
-      .subscribe(
-        (resp: CardResponse)=>{
-          console.log(resp);
-          //debugger;
-          this.cardsLength=resp.count;
-          this.card=resp.card;
-        },
-        (err)=>{
-          console.log(err);
-      }
-    )
+    if(i!='0'){
+      this.cardService.getCardData(i)
+        .subscribe(
+          (resp: CardResponse)=>{
+            console.log(resp);
+            //debugger;
+            this.cardsLength=resp.count;
+            this.card=resp.card;
+          },
+          (err)=>{
+            console.log(err);
+        }
+      )
+    }
+    else{
+      this.addWord();
+    }
+  }
+
+  public addWord(){
+    this.card=new CardModel('','');
+    this.isNewWord = true;
+    this.isUpdate = false;
+    this.disabledInput = false;
+  }
+
+  sendNewWord(){
+    this.cardService.postCardData(this.card)
+      .subscribe((resp)=>{
+        console.log(resp);
+        this.router.navigate(['/card/'+resp['id']]);
+       
+      });
   }
 
   public updateWord(){
+    this.isUpdate = true;
+    this.isNewWord =false;
+    this.disabledInput = false;
+  }
+
+  sendUpdate(){
     this.cardService.updateCardData(this.card)
       .subscribe(
         (resp)=>{
-          console.log(resp);
+          this.getWord();  
+          this.isUpdate= false;
         },
         (err)=>console.log(err)
     )
-
   }
 
-  
+  public toggleShowRussian(){
+    this.cardService.showRussian=!this.cardService.showRussian;
+  }
 
+  public cancel(){
+    this.isUpdate=false;
+    this.isNewWord=false;
 
+    if(this.getId()=='0'){
+      this.router.navigate(['card/1'])
 
+    }
 
+  }
 }

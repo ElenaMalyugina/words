@@ -12,7 +12,7 @@ router.get('/', (req, res, next)=>{
     count: 0,
     card: null
   }
-  let cardId=req.query.id;
+  let cardId=parseInt(req.query.id);
 
   database()
   .then((connect)=>{
@@ -37,18 +37,22 @@ router.get('/', (req, res, next)=>{
 });
 
 router.post('/', (req, res, next)=>{
-  console.log(req.body);
+  /*console.log(req.body);*/
   database()
   .then((connect)=>{
-    var dbo = connect.db("local");
-    dbo.collection("words").insertOne(req.body, (err, r)=>{
-      res.send("Вставлено")      
-    })
-    connect.close();
+      var dbo = connect.db("local");
+        dbo.collection('words').find().sort({id:-1}).limit(1).toArray((err, resp)=>{
+            req.body.id=resp[0].id+1;
+            dbo.collection('words').insertOne(req.body)
+            .then((resp)=>{
+              console.log(resp);
+              res.send(resp.ops[0]);
+              connect.close()
+            })
+        });
+      
   })
-  .catch((err)=>{
-    console.log(err)
-  })   
+      
 })
 
 router.put('/', (req, res, next)=>{
@@ -57,9 +61,7 @@ router.put('/', (req, res, next)=>{
     var dbo = connect.db("local");
     var myquery = { id: req.body.id};
     var newvalues = {englishWord: req.body.englishWord, russianWord: req.body.russianWord};
-
-    console.log(newvalues)
-
+    
     dbo.collection("words").updateOne(myquery, {$set:newvalues}, (err, r)=>{
       if(err) console.log(err)
       

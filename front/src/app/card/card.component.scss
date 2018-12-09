@@ -1,3 +1,14 @@
+.container-buttons{
+    text-align: right;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+
+    button{
+        margin-left: 10px;
+    }
+}
+
 form{
     margin: 0 auto;
     position: relative;
@@ -15,4 +26,8 @@ form{
 
 .link-next{
     right: -50px;
+}
+
+.form-control:disabled{
+    background: #fff;
 }

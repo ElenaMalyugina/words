@@ -7,14 +7,19 @@ import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router';
 import { CardComponent } from './card/card.component';
 import { CardService } from './card/card.service';
 import { CustomRouteReuseStrategy } from './customReuseStrategy';
+import { GeneralComponent } from './general/general.component';
 
 const appRoutes: Routes = [
   { path: 'card/:id',
     component: CardComponent
   },
+  {
+    path:'general',
+    component: GeneralComponent
+  },
   { path: '',
     redirectTo: '/general',
-    pathMatch: 'full'
+    pathMatch: 'full'    
   },
   /*{ path: '**', component: PageNotFoundComponent }*/
 ];
@@ -23,7 +28,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    CardComponent
+    CardComponent,
+    GeneralComponent
   ],
   imports: [
     BrowserModule,

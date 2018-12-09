@@ -5,6 +5,8 @@ import { CardModel, CardResponse } from "../models/cardModel";
 
 @Injectable()
 export class CardService{
+    showRussian: boolean;
+
     constructor(private http: HttpClient){ }
 
     public getCardData(id): Observable<CardResponse> {
