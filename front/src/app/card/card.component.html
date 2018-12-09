@@ -1,11 +1,15 @@
-<form class="jumbotron col-6" *ngIf="card">
+<form class="jumbotron col-6">
   <div class="form-group">
     <label for="english">English</label>
     <input class="form-control" [(ngModel)]="card.englishWord" name="english">
   </div>
   <div class="form-group">
       <label for="russian">Russian</label>
-    <input class="form-control" [(ngModel)]="card.russianWord" name="russian">
+      <input class="form-control" [(ngModel)]="card.russianWord" name="russian">
   </div>
   <button class="btn btn-primary" (click)="updateWord()">Изменить</button>
+  <a href="#" [routerLink]="[prevLink]" class="btn btn-primary link link-prev"><</a>
+  <a href="#" [routerLink]="[nextLink]" class="btn btn-primary link link-next">></a>
 </form>
+
+

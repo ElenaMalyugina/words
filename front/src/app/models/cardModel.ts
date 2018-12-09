@@ -3,3 +3,8 @@ export interface CardModel{
     englishWord: string;
     russianWord: string;
 }
+
+export interface CardResponse{
+    count: number;
+    card: CardModel;
+}

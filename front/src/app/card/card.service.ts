@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { CardModel } from "../models/cardModel";
+import { CardModel, CardResponse } from "../models/cardModel";
 
 @Injectable()
 export class CardService{
     constructor(private http: HttpClient){ }
 
-    public getCardData(id): Observable<CardModel> {
-        return this.http.get<CardModel>('http://localhost:3000/card?id=1');
+    public getCardData(id): Observable<CardResponse> {
+        return this.http.get<CardResponse>('http://localhost:3000/card?id='+`${id}`);
     }
 
     public postCardData(newWord){

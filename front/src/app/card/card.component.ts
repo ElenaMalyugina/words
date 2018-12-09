@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CardModel } from '../models/cardModel';
+import { CardModel, CardResponse } from '../models/cardModel';
 import { CardService } from './card.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { strictEqual } from 'assert';
 
 
 @Component({
@@ -12,16 +13,34 @@ import { ActivatedRoute } from '@angular/router';
 export class CardComponent implements OnInit {
 
   card: CardModel;
+  cardsLength: number;
+  
+  constructor(private cardService: CardService, private actvatedRoute: ActivatedRoute){}
 
-  constructor(private cardService: CardService, private actvatedRoute: ActivatedRoute){
+  get prevLink(){
+    let prevInd=parseInt(this.getId())-1;
+    if((prevInd)<1){
+      prevInd=1;
+    }
+    let newLink='/card/' + prevInd;
+    return newLink;
+  }
 
+  get nextLink(){
+    let nextInd=parseInt(this.getId())+1;
+    if(nextInd> this.cardsLength){
+      nextInd=this.cardsLength;
+    }
+
+    let newLink='/card/' + nextInd;
+    return newLink;
   }
 
   ngOnInit() {
     this.getWord();    
   }
 
-  private getId(){
+  public getId(){
     return this.actvatedRoute.snapshot.paramMap.get('id');
   }
 
@@ -29,13 +48,11 @@ export class CardComponent implements OnInit {
     let i=this.getId();
     this.cardService.getCardData(i)
       .subscribe(
-        (resp: CardModel)=>{
+        (resp: CardResponse)=>{
           console.log(resp);
           //debugger;
-          this.card=resp;
-          if(!this.card.id){
-            this.card.id = i;
-          }
+          this.cardsLength=resp.count;
+          this.card=resp.card;
         },
         (err)=>{
           console.log(err);
@@ -53,6 +70,8 @@ export class CardComponent implements OnInit {
     )
 
   }
+
+  
 
 
 

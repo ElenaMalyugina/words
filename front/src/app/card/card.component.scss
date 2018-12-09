@@ -1,3 +1,18 @@
 form{
     margin: 0 auto;
+    position: relative;
+}
+
+.link{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.link-prev{
+    left: -50px;
+}
+
+.link-next{
+    right: -50px;
 }

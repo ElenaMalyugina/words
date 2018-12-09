@@ -8,19 +8,28 @@ function database(){
 }
 
 router.get('/', (req, res, next)=>{
-
+  let sendToFront={
+    count: 0,
+    card: null
+  }
   let cardId=req.query.id;
 
   database()
   .then((connect)=>{
     var dbo = connect.db("local");
     
-    dbo.collection("words").findOne({}, (err, r)=>{
-      res.send(
-        JSON.stringify(r)
-      )
-    })
-    connect.close()
+    dbo.collection("words").countDocuments()
+      .then((count)=>{
+        sendToFront.count = count;
+      })
+      .then(()=>{
+        return dbo.collection("words").findOne({id: cardId})
+      })
+      .then((card)=>{
+        sendToFront.card=card;
+        res.send(JSON.stringify(sendToFront));
+        connect.close();
+      })    
   })
   .catch((err)=>{
     console.log(err)
