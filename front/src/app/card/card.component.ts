@@ -22,8 +22,8 @@ export class CardComponent implements OnInit {
 
   get prevLink(){
     let prevInd=parseInt(this.getId())-1;
-    if((prevInd)<1){
-      prevInd=1;
+    if(prevInd<1){
+      prevInd=this.cardsLength;
     }
     let newLink='/card/' + prevInd;
     return newLink;
@@ -32,9 +32,9 @@ export class CardComponent implements OnInit {
   get nextLink(){
     let nextInd=parseInt(this.getId())+1;
     if(nextInd> this.cardsLength){
-      nextInd=this.cardsLength;
+      nextInd= 1;
     }
-
+    
     let newLink='/card/' + nextInd;
     return newLink;
   }
@@ -96,6 +96,7 @@ export class CardComponent implements OnInit {
         (resp)=>{
           this.getWord();  
           this.isUpdate= false;
+          this.disabledInput = true;
         },
         (err)=>console.log(err)
     )

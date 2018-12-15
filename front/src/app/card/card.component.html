@@ -21,6 +21,7 @@
   </div>
   <a href="#" [routerLink]="[prevLink]" class="btn btn-primary link link-prev"><</a>
   <a href="#" [routerLink]="[nextLink]" class="btn btn-primary link link-next">></a>
+  <p *ngIf="getId()>0">Карточка {{getId()}} из {{cardsLength}}</p>
 </form>
 
 
