@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CardModel, CardResponse } from '../models/cardModel';
 import { CardService } from './card.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { strictEqual } from 'assert';
+import * as ru from 'convert-layout/ru';
 
 
 @Component({
@@ -11,7 +11,6 @@ import { strictEqual } from 'assert';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent implements OnInit {
-
   card: CardModel = new CardModel('', '');
   cardsLength: number;
   disabledInput: boolean = true;
@@ -114,6 +113,13 @@ export class CardComponent implements OnInit {
       this.router.navigate(['card/1'])
 
     }
+  }
 
+  public layoutSwitcherToRu(e: string){
+    this.card.russianWord= ru.fromEn(e);
+  }
+
+  public layoutSwitcherToEn(e: string){
+    this.card.englishWord= ru.toEn(e);
   }
 }

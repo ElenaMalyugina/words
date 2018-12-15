@@ -5,14 +5,14 @@
 <form class="jumbotron col-6">
   <div class="form-group">
     <label for="english">English</label>
-    <input class="form-control" [(ngModel)]="card.englishWord" name="english" [disabled]="disabledInput">
+    <input class="form-control" [ngModel]="card.englishWord" (ngModelChange)="layoutSwitcherToEn($event)" name="english" [disabled]="disabledInput">
   </div>
   <div class="form-group">
     <button [hidden]="isUpdate || isNewWord" (click)="toggleShowRussian()">{{cardService.showRussian? 'Скрыть перевод': 'Показать перевод'}}</button>
   </div>
   <div class="form-group" [hidden]="!cardService.showRussian && !isUpdate && !isNewWord">
       <label for="russian">Russian</label>
-      <input class="form-control" [(ngModel)]="card.russianWord" name="russian" [disabled]="disabledInput">      
+      <input class="form-control" [ngModel]="card.russianWord" (ngModelChange)="layoutSwitcherToRu($event)" name="russian" [disabled]="disabledInput">      
   </div>
   <div class="container-buttons">
     <button class="btn btn-primary" [hidden]="!isNewWord" (click)="sendNewWord()">Создать</button>
