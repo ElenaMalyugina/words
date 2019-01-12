@@ -46,16 +46,23 @@ export class CardComponent implements OnInit {
     return this.actvatedRoute.snapshot.paramMap.get('id');
   }
 
+  private getCountWords(){
+    return this.cardService.getCardsLength()
+      .subscribe(
+        (resp)=>{
+          this.cardsLength= resp.count;
+      });
+  }
+
   public getWord(){
+    this.getCountWords();
     let i=this.getId();
+
     if(i!='0'){
       this.cardService.getCardData(i)
         .subscribe(
-          (resp: CardResponse)=>{
-            console.log(resp);
-            //debugger;
-            this.cardsLength=resp.count;
-            this.card=resp.card;
+          (resp: CardModel)=>{
+            this.card=resp;
           },
           (err)=>{
             console.log(err);
@@ -77,8 +84,7 @@ export class CardComponent implements OnInit {
   sendNewWord(){
     this.cardService.postCardData(this.card)
       .subscribe((resp)=>{
-        console.log(resp);
-        this.router.navigate(['/card/'+resp['id']]);
+        this.router.navigate([`/card/${this.cardsLength + 1}`]);
        
       });
   }

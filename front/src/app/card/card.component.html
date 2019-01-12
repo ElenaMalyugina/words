@@ -14,6 +14,10 @@
       <label for="russian">Russian</label>
       <input class="form-control" [ngModel]="card.russianWord" (ngModelChange)="layoutSwitcherToRu($event)" name="russian" [disabled]="disabledInput">      
   </div>
+  <div class="form-group">
+    <label for="russian">В избранное</label>
+    <input class="form-control" type="checkbox" [(ngModel)]="card.isHardly">
+  </div>
   <div class="container-buttons">
     <button class="btn btn-primary" [hidden]="!isNewWord" (click)="sendNewWord()">Создать</button>
     <button class="btn btn-primary" [hidden]="!isUpdate" (click)="sendUpdate()">Отправить</button>

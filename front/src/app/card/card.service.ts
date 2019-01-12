@@ -9,8 +9,12 @@ export class CardService{
 
     constructor(private http: HttpClient){ }
 
-    public getCardData(id): Observable<CardResponse> {
-        return this.http.get<CardResponse>('http://localhost:3000/card?id='+`${id}`);
+    public getCardsLength():Observable<{count: number}>{
+        return this.http.get<{count: number}>('http://localhost:3000/card/count');
+    }
+    
+    public getCardData(id): Observable<CardModel> {
+        return this.http.get<CardModel>('http://localhost:3000/card?id='+`${id}`);
     }
 
     public postCardData(newWord){
