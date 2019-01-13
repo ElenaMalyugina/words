@@ -1,0 +1,15 @@
+@media(max-width: 575px){
+    table{
+        thead{
+            tr th:nth-child(4){
+                display: none;
+            }
+        }
+        tbody{
+            tr td:nth-child(4){
+                display: none;
+            }
+        }
+    }
+
+}

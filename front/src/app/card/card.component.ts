@@ -16,7 +16,7 @@ export class CardComponent implements OnInit {
   disabledInput: boolean = true;
   isUpdate: boolean = false;
   isNewWord: boolean = false;
-  
+    
   constructor(private cardService: CardService, private actvatedRoute: ActivatedRoute, private router: Router){}
 
   get prevLink(){
@@ -107,6 +107,14 @@ export class CardComponent implements OnInit {
     )
   }
 
+  setIsHardlly(e){
+    this.card.isHardly= e;
+    console.log(this.card);
+    this.cardService.setHardly(this.card).subscribe((data)=>{
+      console.log(data);
+    })
+  }
+
   public toggleShowRussian(){
     this.cardService.showRussian=!this.cardService.showRussian;
   }
@@ -119,6 +127,15 @@ export class CardComponent implements OnInit {
       this.router.navigate(['card/1'])
 
     }
+  }
+
+  filterWords(e){
+    if(this.getId()=="1"){
+      this.getWord();
+    }
+    else{
+      this.router.navigate(['card/1']);
+    }   
   }
 
   public layoutSwitcherToRu(e: string){

@@ -1,0 +1,27 @@
+<h3>Список Ваших слов</h3>
+<div class="form-group form-check">
+  <input class="form-check-input" type="checkbox" [ngModel]="onlyHardly" (ngModelChange)="filterWords($event)" id="onlyHardly">
+  <label class="form-check-label" for="onlyHardly"> Только трудные</label>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">English</th>
+      <th scope="col">Russian</th>
+      <th scope="col">Трудное для изучения</th>
+      <th scope="col">Переход к карточке</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let el of listShowWords; let i = index">
+      <td >{{i+1}}</td>
+      <td>{{el.englishWord}}</td>
+      <td>{{el.russianWord}}</td>
+      <td>{{el.isHardly ? 'да': ''}}</td>
+      <td>
+        <a href="#" [routerLink]="['/card/'+ (i+1)]">{{el.englishWord}}</a>
+      </td>
+    </tr>    
+  </tbody>
+</table>

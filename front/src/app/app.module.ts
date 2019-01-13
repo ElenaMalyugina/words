@@ -8,10 +8,16 @@ import { CardComponent } from './card/card.component';
 import { CardService } from './card/card.service';
 import { CustomRouteReuseStrategy } from './customReuseStrategy';
 import { GeneralComponent } from './general/general.component';
+import { ListWordsComponent } from './list-words/list-words.component';
+import { ListWordsService} from './list-words/list-words.service';
 
 const appRoutes: Routes = [
   { path: 'card/:id',
     component: CardComponent
+  },
+  {
+    path: 'listWords', 
+    component: ListWordsComponent
   },
   {
     path:'general',
@@ -29,7 +35,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     CardComponent,
-    GeneralComponent
+    GeneralComponent,
+    ListWordsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +51,8 @@ const appRoutes: Routes = [
       provide: RouteReuseStrategy,
       useClass: CustomRouteReuseStrategy
     },
-    CardService
+    CardService,
+    ListWordsService
   ],
   bootstrap: [AppComponent]
 })

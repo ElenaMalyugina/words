@@ -5,16 +5,17 @@ import { CardModel, CardResponse } from "../models/cardModel";
 
 @Injectable()
 export class CardService{
-    showRussian: boolean;
+    public showRussian: boolean;
+    public onlyHardly: boolean;
 
     constructor(private http: HttpClient){ }
 
     public getCardsLength():Observable<{count: number}>{
-        return this.http.get<{count: number}>('http://localhost:3000/card/count');
+        return this.http.get<{count: number}>(`http://localhost:3000/card/count?onlyHardly=${this.onlyHardly}`);
     }
     
     public getCardData(id): Observable<CardModel> {
-        return this.http.get<CardModel>('http://localhost:3000/card?id='+`${id}`);
+        return this.http.get<CardModel>(`http://localhost:3000/card?id=${id}&onlyHardly=${this.onlyHardly}`);
     }
 
     public postCardData(newWord){
@@ -25,4 +26,7 @@ export class CardService{
         return this.http.put('http://localhost:3000/card', changeWord);
     }
 
+    public setHardly(card){
+        return this.http.put('http://localhost:3000/card/setHardly', card );
+    }
 }
