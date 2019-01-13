@@ -14,7 +14,7 @@
       <label for="russian">Russian</label>
       <input class="form-control" [ngModel]="card.russianWord" (ngModelChange)="layoutSwitcherToRu($event)" name="russian" [disabled]="disabledInput">      
   </div>
-  <div class="form-group form-check">    
+  <div class="form-group form-check" *ngIf="!isNewWord">    
     <input class="form-check-input" type="checkbox" [ngModel]="card.isHardly" (ngModelChange)="setIsHardlly($event)" name="isHardly" id="isHardly"> 
     <label class="form-check-label" for="isHardly">В плохо запоминаемое</label>
   </div>
@@ -27,7 +27,7 @@
   <a href="#" [routerLink]="[nextLink]" class="btn btn-primary link link-next">></a>
   <p *ngIf="getId()>0">Карточка {{getId()}} из {{cardsLength}}</p>
 </form>
-<div class="form-group form-check col-lg-6 col-10 ml-auto">
+<div *ngIf="!isNewWord" class="form-group form-check col-lg-6 col-10 ml-auto">
   <input class="form-check-input" type="checkbox" [(ngModel)]="cardService.onlyHardly" (ngModelChange)="filterWords($event)" id="onlyHardly">
   <label class="form-check-label" for="onlyHardly"> Только плохо запоминаемые</label>
 </div>
