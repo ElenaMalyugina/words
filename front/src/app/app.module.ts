@@ -27,7 +27,7 @@ const appRoutes: Routes = [
     redirectTo: '/general',
     pathMatch: 'full'    
   },
-  /*{ path: '**', component: PageNotFoundComponent }*/
+  { path: '**', component: GeneralComponent }
 ];
 
 

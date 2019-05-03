@@ -1,19 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var MongoClient = require('mongodb').MongoClient;
+const express = require('express');
+const router = express.Router();
+const connectDB = require('../helpers/database').connect;
 const ObjectId = require('mongodb').ObjectID;
 
 
-function database(){
-  return MongoClient.connect('mongodb://127.0.0.1:27017', {useNewUrlParser: true} );  
-}
-
 router.get('/count/', (req, res, next)=>{
   let onlyHardly=req.query.onlyHardly;
-  database()
+  connectDB()
   .then((connect)=>{
     var dbo = connect.db("local"); 
-      console.log(typeof onlyHardly);
       let filter = onlyHardly==="true"? {isHardly: true} : {} ;       
 
       dbo.collection("words").countDocuments(filter)
@@ -32,7 +27,7 @@ router.get('/', (req, res, next)=>{
   let cardId=req.query.id;
   let onlyHardly=req.query.onlyHardly;
 
-  database()
+  connectDB()
   .then((connect)=>{
     var dbo = connect.db("local");      
       console.log(cardId);
@@ -52,7 +47,7 @@ router.get('/', (req, res, next)=>{
 
 router.post('/', (req, res, next)=>{
   /*console.log(req.body);*/
-  database()
+  connectDB()
   .then((connect)=>{
       var dbo = connect.db("local");
         dbo.collection('words').insertOne(req.body)
@@ -65,7 +60,7 @@ router.post('/', (req, res, next)=>{
 })
 
 router.put('/', (req, res, next)=>{
-  database()
+  connectDB()
   .then((connect)=>{
     var dbo = connect.db("local");
     var myquery = {_id: ObjectId(req.body._id)};
@@ -85,7 +80,7 @@ router.put('/', (req, res, next)=>{
 })
 
 router.put('/setHardly/', (req, res, next)=>{
-  database()
+  connectDB()
   .then((connect)=>{
     var dbo = connect.db("local");
     var myquery = {_id: ObjectId(req.body._id)};

@@ -1,15 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectID;
-
-
-function database(){
-  return MongoClient.connect('mongodb://127.0.0.1:27017', {useNewUrlParser: true} );  
-}
+const express = require('express');
+const router = express.Router();
+const connectDB = require('../helpers/database').connect;
 
 router.get('/', (req, res, next)=>{
-  database()
+  connectDB()
   .then((connect)=>{
     var dbo = connect.db("local");         
 
