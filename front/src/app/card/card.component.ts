@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CardModel, CardResponse } from '../models/cardModel';
+import { CardModel} from '../models/cardModel';
 import { CardService } from './card.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as ru from 'convert-layout/ru';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class CardComponent implements OnInit {
     
   constructor(private cardService: CardService, private actvatedRoute: ActivatedRoute, private router: Router){}
 
-  get prevLink(){
+  get prevLink():string{
     let prevInd=parseInt(this.getId())-1;
     if(prevInd<1){
       prevInd=this.cardsLength;
@@ -28,7 +29,7 @@ export class CardComponent implements OnInit {
     return newLink;
   }
 
-  get nextLink(){
+  get nextLink():string{
     let nextInd=parseInt(this.getId())+1;
     if(nextInd> this.cardsLength){
       nextInd= 1;
@@ -42,23 +43,22 @@ export class CardComponent implements OnInit {
     this.getWord();    
   }
 
-  public getId(){
+  public getId():string{
     return this.actvatedRoute.snapshot.paramMap.get('id');
   }
 
-  private getCountWords(callback?){
+  private getCountWords(callback?):Subscription{
     return this.cardService.getCardsLength()
       .subscribe(
         (resp)=>{
           this.cardsLength= resp.count;
           if(callback){
             callback();
-          }
-         
+          }         
       });
   }
 
-  public getWord(){
+  public getWord():void{
     this.getCountWords();
     let i=this.getId();
 
@@ -78,14 +78,14 @@ export class CardComponent implements OnInit {
     }
   }
 
-  public addWord(){
+  public addWord():void{
     this.card=new CardModel('','');
     this.isNewWord = true;
     this.isUpdate = false;
     this.disabledInput = false;
   }
 
-  sendNewWord(){
+  sendNewWord():void{
     this.cardService.postCardData(this.card)
       .subscribe((resp)=>{
         this.cardService.onlyHardly = false;
@@ -94,13 +94,13 @@ export class CardComponent implements OnInit {
       });
   }
 
-  public updateWord(){
+  public updateWord():void{
     this.isUpdate = true;
     this.isNewWord =false;
     this.disabledInput = false;
   }
 
-  sendUpdate(){
+  sendUpdate():void{
     this.cardService.updateCardData(this.card)
       .subscribe(
         (resp)=>{
@@ -112,7 +112,7 @@ export class CardComponent implements OnInit {
     )
   }
 
-  setIsHardlly(e){
+  setIsHardlly(e):void{
     this.card.isHardly= e;
     console.log(this.card);
     this.cardService.setHardly(this.card).subscribe((data)=>{
@@ -120,11 +120,11 @@ export class CardComponent implements OnInit {
     })
   }
 
-  public toggleShowRussian(){
+  public toggleShowRussian():void{
     this.cardService.showRussian=!this.cardService.showRussian;
   }
 
-  public cancel(){
+  public cancel():void{
     this.isUpdate=false;
     this.isNewWord=false;
 
@@ -134,7 +134,7 @@ export class CardComponent implements OnInit {
     }
   }
 
-  filterWords(e){
+  public filterWords(e):void{
     if(this.getId()=="1"){
       this.getWord();
     }
@@ -143,11 +143,11 @@ export class CardComponent implements OnInit {
     }   
   }
 
-  public layoutSwitcherToRu(e: string){
+  public layoutSwitcherToRu(e: string):void{
     this.card.russianWord= ru.fromEn(e);
   }
 
-  public layoutSwitcherToEn(e: string){
+  public layoutSwitcherToEn(e: string):void{
     this.card.englishWord= ru.toEn(e);
   }
 }

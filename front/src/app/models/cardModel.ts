@@ -6,11 +6,6 @@ export class CardModel{
 
     constructor(englishWord, russianWord){
         this.englishWord=englishWord;
-        this.russianWord=russianWord;
+        this.russianWord=russianWord;        
     }
-}
-
-export interface CardResponse{
-    count: number;
-    card: CardModel;
 }

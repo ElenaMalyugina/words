@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CardModel } from '../models/cardModel';
 import { ListWordsService } from './list-words.service';
 
 @Component({
@@ -7,31 +8,28 @@ import { ListWordsService } from './list-words.service';
   styleUrls: ['./list-words.component.scss']
 })
 export class ListWordsComponent implements OnInit {
-  listWords: any = [];
+  listWords: CardModel[] = [];
   onlyHardly: boolean;
-  listShowWords:any = [];
+  listShowWords:CardModel[] = [];
 
   constructor(private listWordsService: ListWordsService) { }
 
   ngOnInit() {
-    this.listWordsService.getWords().subscribe((d)=>{
-      this.listWords = d;
-      this.listShowWords = d;
+    this.listWordsService.getWords().subscribe((words)=>{
+      this.listWords = words;
+      this.listShowWords = words;
     })
   }
 
-  filterWords(e){    
+  public filterWords(e):void{    
     if(e){ 
       this.listShowWords = this.listWords.filter(el=> {
         return el.isHardly === true;
-      });
-      
+      });      
     }
     else{
       this.listShowWords = this.listWords;
     }
-
-
   }
 
 }
